@@ -4,10 +4,10 @@ class Production:
         self.__leftSide = left_side
         self.__rightSide = right_side
 
-    def getLeft(self):
+    def getLeftSide(self):
         return self.__leftSide
 
-    def getRight(self):
+    def getRightSide(self):
         return self.__rightSide
 
     def __str__(self):

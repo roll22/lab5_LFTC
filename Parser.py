@@ -6,7 +6,9 @@ class Parser:
         self._grammar = grammar
         self.firstSet = {i: set() for i in self._grammar.getNonTerminals()}
         self.followSet = {i: set() for i in self._grammar.getNonTerminals()}
+        self.generateFirst()
         self.Follow()
+        print(self.firstSet)
         print(self.followSet)
 
     def Loop(self, initialSet, items, additionalSet):
@@ -41,13 +43,12 @@ class Parser:
                     self.firstSet[key] = copySet
                     isSetChanged = True
 
-
     def Follow(self):
         self.followSet[self._grammar.getStartSymbol()].add('$')
         isSetChanged = False
         for production in self._grammar.getProductions():
-            key = production.getLeft()
-            value = production.getRight()
+            key = production.getLeftSide()
+            value = production.getRightSide()
             v = list(value)
             for i in range(len(v)):
                 if v[i] not in self._grammar.getNonTerminals():
@@ -64,8 +65,8 @@ class Parser:
         while isSetChanged:
             isSetChanged = False
             for production in self._grammar.getProductions():
-                key = production.getLeft()
-                value = production.getRight()
+                key = production.getLeftSide()
+                value = production.getRightSide()
                 v = list(value)
                 for i in range(len(v)):
                     if v[i] not in self._grammar.getNonTerminals():
