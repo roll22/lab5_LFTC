@@ -44,7 +44,7 @@ class Parser:
                     isSetChanged = True
 
     def Follow(self):
-        self.followSet[self._grammar.getStartSymbol()].add('$')
+        self.followSet[self._grammar.getStartSymbol()].add('E')
         isSetChanged = False
         for production in self._grammar.getProductions():
             key = production.getLeftSide()

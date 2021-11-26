@@ -1,6 +1,8 @@
-S A B
-0 1
+S A B C D
++ * ( ) a
 S
-S -> 0|A
-A -> 1A0|0|E
-B -> 0
+S -> BA
+A -> +BA|E
+B -> DC
+C -> *DC|E
+D -> (S)|a
