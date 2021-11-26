@@ -26,6 +26,22 @@ class Parser:
                 break
         return copySet
 
+    def generateFirst(self):
+        isSetChanged = True
+        while isSetChanged:
+            isSetChanged = False
+            for production in self._grammar.getProductions():
+                key = production.getLeftSide()
+                value = production.getRightSide()
+                v = list(value)
+                copySet = self.firstSet[key]
+                copySet = copySet.union(self.Loop(copySet, v, ['E']))
+
+                if len(self.firstSet[key]) != len(copySet):
+                    self.firstSet[key] = copySet
+                    isSetChanged = True
+
+
     def Follow(self):
         self.followSet[self._grammar.getStartSymbol()].add('$')
         isSetChanged = False
