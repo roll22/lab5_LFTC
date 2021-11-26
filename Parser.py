@@ -6,7 +6,7 @@ class Parser:
         self._grammar = grammar
         self.firstSet = {i: set() for i in self._grammar.getNonTerminals()}
         self.followSet = {i: set() for i in self._grammar.getNonTerminals()}
-        self.generateFirst()
+        self.First()
         self.Follow()
         print(self.firstSet)
         print(self.followSet)
@@ -28,7 +28,7 @@ class Parser:
                 break
         return copySet
 
-    def generateFirst(self):
+    def First(self):
         isSetChanged = True
         while isSetChanged:
             isSetChanged = False
