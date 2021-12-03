@@ -80,6 +80,15 @@ class Parser:
                         self.followSet[v[i]] = copySet
                         isSetChanged = True
 
+    def create_parsing_table(self):
+        parsingTable = {}
+        for nonTerminal in self._grammar.getNonTerminals():
+            parsingTable[nonTerminal] = {}
+            for terminal in self._grammar.getTerminals():
+                parsingTable[nonTerminal][terminal] = 0
+        print(parsingTable)
+
 
 g = Grammar("resources/grammars/g2.txt")
 p = Parser(g)
+p.create_parsing_table()
