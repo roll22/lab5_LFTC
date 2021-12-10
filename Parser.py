@@ -9,6 +9,8 @@ class Parser:
         self._table = {}
         self.First()
         self.Follow()
+        print(self.firstSet)
+        print(self.followSet)
 
     def Loop(self, initialSet, items, additionalSet):
         copySet = initialSet
@@ -113,18 +115,7 @@ class Parser:
                             if b == 'E':
                                 b = '$'
                             self._table[(rowSymbol, b)] = (right, index)
-                    else:
-                        firsts = set()
-                        for production in self._grammar.getProductions():
-                            if production.getLeftSide() == rowSymbol:
-                                if production.getRightSide() in nonterminals:
-                                    firsts = firsts.union(self.firstSet[production.getRightSide()])
-                                if 'E' in firsts:
-                                    for b in self.followSet[rowSymbol]:
-                                        if b == 'E':
-                                            b = '$'
-                                        if (rowSymbol, b) not in self._table.keys():
-                                            self._table[(rowSymbol, b)] = (right, index)
+
         for t in terminals:
             self._table[(t, t)] = ('pop', -1)
 
