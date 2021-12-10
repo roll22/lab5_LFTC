@@ -9,8 +9,6 @@ class Parser:
         self._table = {}
         self.First()
         self.Follow()
-        print(self.firstSet)
-        print(self.followSet)
 
     def Loop(self, initialSet, items, additionalSet):
         copySet = initialSet
@@ -137,6 +135,7 @@ class Parser:
                 a = stack[0]
                 # error operation
                 if (a, x) not in self._table.keys():
+
                     return 'Unrecognized'
                 # push operation
                 else:
@@ -150,13 +149,15 @@ class Parser:
             print(output)
         # error operation
         if stack[0] == '$' and remaining_seq:
-            return None
+            return 'Unrecognized'
         # push or accept operation
         elif not remaining_seq:
             while stack[0] != '$':
                 a = stack[0]
                 if (a, '$') in self._table.keys():
                     output += str(self._table[(a, '$')][1]) + " "
+                else:
+                    return 'Unrecognized'
                 stack.pop(0)
             return output
 
