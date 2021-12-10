@@ -1,8 +1,8 @@
-S A B C D
-+ * ( ) a
-S
-S -> BA
-A -> +BA|E
-B -> DC
-C -> *DC|E
-D -> (S)|a
+A B C D F
++ * i ( )
+A
+A -> CB
+B -> +CB|E
+C -> FD
+D -> *FD|E
+F -> i|(A)

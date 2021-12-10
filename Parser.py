@@ -92,11 +92,11 @@ class Parser:
     def generateTable(self):
         nonterminals = self._grammar.getNonTerminals()
         terminals = self._grammar.getTerminals()
-        for i in self._grammar.getProductions():
-            key = i.getLeftSide()
-            right = i.getRightSide()
+        for current_production in self._grammar.getProductions():
+            key = current_production.getLeftSide()
+            right = current_production.getRightSide()
             right_splitted = list(right)
-            index = i.getIndex()
+            index = current_production.getIndex()
             rowSymbol = key
             for columnSymbol in terminals + ["E"]:
                 pair = (rowSymbol, columnSymbol)
@@ -123,21 +123,21 @@ class Parser:
         self._table[('$', '$')] = ('acc', -1)
 
     def evaluateSequence(self, sequence):
-        w = list(sequence)
+        remaining_seq = list(sequence)
         stack = [self._grammar.getStartSymbol(), '$']
         output = ""
-        while stack[0] != '$' and w:
-            print(w, stack)
+        while stack[0] != '$' and remaining_seq:
+            print(remaining_seq, stack)
             # pop operation
-            if w[0] == stack[0]:
-                w = w[1:]
+            if remaining_seq[0] == stack[0]:
+                remaining_seq = remaining_seq[1:]
                 stack.pop(0)
             else:
-                x = w[0]
+                x = remaining_seq[0]
                 a = stack[0]
                 # error operation
                 if (a, x) not in self._table.keys():
-                    return None
+                    return 'Unrecognized'
                 # push operation
                 else:
                     stack.pop(0)
@@ -149,10 +149,10 @@ class Parser:
                     output += str(index) + " "
             print(output)
         # error operation
-        if stack[0] == '$' and w:
+        if stack[0] == '$' and remaining_seq:
             return None
         # push or accept operation
-        elif not w:
+        elif not remaining_seq:
             while stack[0] != '$':
                 a = stack[0]
                 if (a, '$') in self._table.keys():
@@ -166,7 +166,6 @@ p = Parser(g)
 p.generateTable()
 for key in p._table:
     print(f'{key} -> {p._table[key]}')
-# print(p._table)
 print('==================================')
 print('==================================')
-print(p.evaluateSequence('+*i'))
+print(f'final Sequence : {p.evaluateSequence("i*i")}')
