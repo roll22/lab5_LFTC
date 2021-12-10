@@ -32,12 +32,14 @@ class Grammar:
             self.__nonTerminals = file.readline().strip().split(' ')
             self.__terminals = file.readline().strip().split(' ')
             self.__start = file.readline().strip()
+            i = 1
             for line in file:
                 production = line.strip().split(' ')
                 key = production[0].strip()
                 values = list(production[2].strip().split('|'))
                 for value in values:
                     self.__productions.append(
-                        Production(key, list(value))
+                        Production(key, list(value), i)
                     )
+                    i += 1
         file.close()
